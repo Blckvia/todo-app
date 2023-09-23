@@ -17,6 +17,17 @@ import (
 	"github.com/spf13/viper"
 )
 
+// @title Todo App API
+// @version 1.0
+// @description API Server for TodoList Application
+
+// @host localhost:8000
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 	if err := initConfig(); err != nil {
@@ -35,7 +46,7 @@ func main() {
 		Username: viper.GetString("db.username"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
-		Password:  os.Getenv("DB_PASSWORD"),
+		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())

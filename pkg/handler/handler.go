@@ -3,6 +3,10 @@ package handler
 import (
 	"github.com/blckvia/todo-app/pkg/service"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "github.com/blckvia/todo-app/docs"
 )
 
 type Handler struct {
@@ -10,11 +14,13 @@ type Handler struct {
 }
 
 func NewHandler(services *service.Service) *Handler {
-	return &Handler{services:services}
+	return &Handler{services: services}
 }
 
- func (h *Handler) InitRoutes() *gin.Engine {
+func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
+
+	//router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	auth := router.Group("/auth")
 	{
@@ -38,7 +44,7 @@ func NewHandler(services *service.Service) *Handler {
 				items.GET("/", h.getAllItems)
 			}
 		}
-		
+
 		items := api.Group("items")
 		{
 			items.GET("/:id", h.getItemById)
@@ -47,5 +53,7 @@ func NewHandler(services *service.Service) *Handler {
 		}
 	}
 
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	return router
- }
+}

@@ -7,6 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary SignUp
+// @Tags auth
+// @Description Create account
+// @ID create-account
+// @Accept  json
+// @Produce  json
+// @Param input body todo.User true "Account Data"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /auth/sign-up [post]
+
 func (h *Handler) signUp(c *gin.Context) {
 	var input todo.User
 
@@ -23,7 +36,7 @@ func (h *Handler) signUp(c *gin.Context) {
 
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
-	} )
+	})
 }
 
 type signInInput struct {
@@ -47,5 +60,5 @@ func (h *Handler) signIn(c *gin.Context) {
 
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"token": token,
-	}) 
+	})
 }
